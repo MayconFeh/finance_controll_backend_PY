@@ -16,12 +16,12 @@ def update_deposit_status(db: Session, deposit: Deposit, is_paid: bool):
 def get_deposit_by_goal_and_id(
     db: Session,
     goal_id: int,
-    deposit_id: int
+    number: int
 ):
     return (
         db.query(Deposit)
         .filter(
-            Deposit.id == deposit_id,
+            Deposit.number == number,
             Deposit.goal_id == goal_id
         )
         .first()

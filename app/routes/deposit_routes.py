@@ -16,26 +16,29 @@ def get_db():
         db.close()
 
 
-@router.patch("/{goal_id}/deposits/{deposit_id}")
+@router.patch("/{goal_id}/deposits/{deposit_number}")
 def update_deposit(
     goal_id: int,
-    deposit_id: int,
+    deposit_number: int,
     data: DepositUpdate,
     db: Session = Depends(get_db)
 ):
     deposit = toggle_deposit_service(
         db=db,
         goal_id=goal_id,
-        deposit_id=deposit_id,
+        deposit_number=deposit_number,
         is_paid=data.is_paid
     )
 
     if not deposit:
-        raise HTTPException(status_code=404, detail="Depósito não encontrado")
+        raise HTTPException(
+            status_code=404,
+            detail="Depósito não encontrado"
+        )
 
     return {
-        "message": "Depósito Pago com sucesso",
+        "message": "Depósito pago com sucesso",
         "goal_id": goal_id,
-        "deposit_id": deposit.id,
+        "deposit_number": deposit_number,
         "is_paid": deposit.is_paid
     }
