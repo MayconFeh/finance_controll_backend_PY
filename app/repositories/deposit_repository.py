@@ -13,7 +13,7 @@ def update_deposit_status(db: Session, deposit: Deposit, is_paid: bool):
     return deposit
 
 
-def get_deposit_by_goal_and_id(
+def get_deposit_by_goal_and_number(
     db: Session,
     goal_id: int,
     number: int
