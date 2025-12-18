@@ -8,16 +8,21 @@ from app.repositories.deposit_repository import (
 def toggle_deposit_service(
     db: Session,
     goal_id: int,
-    deposit_number: int,
-    is_paid: bool
+    deposit_number: int
 ):
     deposit = get_deposit_by_goal_and_number(
         db=db,
         goal_id=goal_id,
-        number=deposit_number
+        number=deposit_number,
     )
 
     if not deposit:
         return None
 
-    return update_deposit_status(db, deposit, is_paid)
+    new_status = not deposit.is_paid
+
+    return update_deposit_status(
+        db=db,
+        deposit=deposit,
+        is_paid=new_status
+    )
