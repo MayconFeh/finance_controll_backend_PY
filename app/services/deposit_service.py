@@ -1,12 +1,21 @@
 from sqlalchemy.orm import Session
 from app.repositories.deposit_repository import (
-    get_deposit_by_id,
+    get_deposit_by_goal_and_id,
     update_deposit_status
 )
 
 
-def toggle_deposit_service(db: Session, deposit_id: int, is_paid: bool):
-    deposit = get_deposit_by_id(db, deposit_id)
+def toggle_deposit_service(
+    db: Session,
+    goal_id: int,
+    deposit_id: int,
+    is_paid: bool
+):
+    deposit = get_deposit_by_goal_and_id(
+        db=db,
+        goal_id=goal_id,
+        deposit_id=deposit_id
+    )
 
     if not deposit:
         return None

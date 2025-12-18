@@ -11,3 +11,18 @@ def update_deposit_status(db: Session, deposit: Deposit, is_paid: bool):
     db.commit()
     db.refresh(deposit)
     return deposit
+
+
+def get_deposit_by_goal_and_id(
+    db: Session,
+    goal_id: int,
+    deposit_id: int
+):
+    return (
+        db.query(Deposit)
+        .filter(
+            Deposit.id == deposit_id,
+            Deposit.goal_id == goal_id
+        )
+        .first()
+    )
